@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/javascripts/jquery-1.9.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        var socket = io.connect('http://localhost:3000');
+
+        jQuery(document).ready(function() {
+
+            socket.emit('getChistes', null);
+
+            socket.on('listChistes', function (data) {
+
+                if (data!=null){
+
+                    var txt='';
+                    var i=0;
+                    for (i=0; i < data.length; i++)
+                    {
+                        var item = data[i];
+                        var usuario = item.usuario;
+                        var chiste = item.chiste;
+
+                        txt += '<tr><td>'+ usuario +'<\/td>';
+                        txt += '<td>'+ chiste +'<\/td><\/tr>';
+                    }
+
+
+                    jQuery('#chistesGrid').replaceWith( txt);
+                }
+
+            });
+        });
+
+
+    </script>
+
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1>Lista de chistes</h1>
+<br>
+
+<table border="1">
+    <tr>
+        <th>Usuario</th>
+        <th>Chiste</th>
+    </tr>
+
+    <tr id="chistesGrid" ></tr>
+
+</table>
+
+
+</body>
+</html>

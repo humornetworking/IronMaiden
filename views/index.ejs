@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="/javascripts/jquery-1.9.1.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+
+      <script>
+          jQuery(document).ready(function() {
+
+
+          });
+
+        var socket = io.connect('http://localhost:3000');
+
+        function enviar() {
+            var usuario = jQuery("#usuario").val();
+            var chiste = jQuery("#chiste").val();
+
+
+            var jsonObj = {"usuario" : usuario, "chiste":  chiste };
+            socket.emit('addChiste', jsonObj);
+
+            jQuery("#usuario").val('');
+            jQuery("#chiste").val('');
+        }
+
+      </script>
+
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Create un chiste</h1>
+<br>
+
+
+
+<br>
+    <h1>Sube una imagen</h1>
+<br>
+    <form id="mainform" enctype="multipart/form-data" action="/save" method="post" >
+        Usuario :<input type="text" name="usuario" id="usuario"><br>
+        Chiste : <input type="text" name="chiste" id="chiste"><br>
+        Imagen : <input name="imageupload" id="imageupload" type="file" /><br />
+        <input name="submit" id="submit" type="submit" value="submit">
+    </form>
+
+  </body>
+</html>
